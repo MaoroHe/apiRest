@@ -1,14 +1,18 @@
 <?php
-    $host = 'localhost';
-    $dbname = 'api';
-    $username = 'root';
-    $password = '';
 
-    // A FAIRE : utiliser .ENV pour les variables d'environnement
+require_once __DIR__ . '/../vendor/autoload.php';
 
-    try {
-        $bdd = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo "Erreur : " . $e->getMessage();
-    }
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$host = $_ENV['HOST'];
+$dbname = $_ENV['DBNAME'];
+$username = $_ENV['USERNAME'];
+$password = $_ENV['PASSWORD'];
+
+try {
+    $bdd = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
